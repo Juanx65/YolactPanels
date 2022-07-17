@@ -23,13 +23,44 @@ A simple, fully convolutional model for real-time instance segmentation. This is
       ```
        source yolact/bin/activate
       ```
-# Setup Enviroment
-  - there are some errors with pytorch for this repo: here is how to fix them in order to create the env:
+# Setup Enviroment and Project
+  - Setup Enviroment and download backbone used for this project
     - create the env with ` virtualenv yolact `
     - enter the env `source yolact/bin/activate`
-    - install pytorch `pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113`
-  or follow the instruction here `https://pytorch.org/`.
-    - install requirements `pip install -r requirements.txt`
+    - install pytorch `pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113` or follow the instructions here `https://pytorch.org/`.
+    - install the requirements `pip install -r requirements.txt`
+    - Download Backbone: Resnet101 `resnet101_reducedfc.pth` from [here](https://drive.google.com/file/d/1tvqFPd4bJtakOlmn-uIA492g2qurRChj/view?usp=sharing).
+  - Small issues with pytorch need to be fixed, if using the cu113 versions, follow this:
+    - in `yolact/lib/python3.10/site-packages/torch/utils/utils/data/sampler.py`
+      - in line 121 replace `generator = torch.Generator()` for `generator = torch.Generator(device='cuda')`
+      - in line 128 to 133 replce 
+      ```
+              yield from torch.randint(high=n, size=(32,), dtype=torch.int64, generator=generator).tolist()
+            yield from torch.randint(high=n, size=(self.num_samples % 32,), dtype=torch.int64, generator=generator).tolist()
+        else:
+            for _ in range(self.num_samples // n):
+                yield from torch.randperm(n, generator=generator).tolist()
+            yield from torch.randperm(n, generator=generator).tolist()[:self.num_samples % n]
+      ```
+      for 
+      ```
+              yield from torch.randint(high=n, size=(32,), dtype=torch.int64, generator=generator,device='cuda').tolist()
+            yield from torch.randint(high=n, size=(self.num_samples % 32,), dtype=torch.int64, generator=generator,device='cuda').tolist()
+        else:
+            for _ in range(self.num_samples // n):
+                yield from torch.randperm(n, generator=generator, device='cuda').tolist()
+            yield from torch.randperm(n, generator=generator,device='cuda').tolist()[:self.num_samples % n]
+      ```
+    - in `yolact/lib/python3.10/site-packages/torch/storage.py`
+      - in line 753 replace 
+      ```
+      return eval(cls.__module__)._UntypedStorage._expired(*args, **kwargs)
+      ```
+      for 
+      ```
+      return eval(cls.__module__)
+      ```
+       
 
 # Evaluation
 
