@@ -20,8 +20,16 @@ A simple, fully convolutional model for real-time instance segmentation. This is
    ```
  - To use this repo and the ready to use env, you need to be working with cuda 13 or higher and cudnn installed.
  - Activate the environment:
-   - Activate Virtualenv Linux
-      - source yolact/bin/activate
+      ```
+       source yolact/bin/activate
+      ```
+# Setup Enviroment
+  - there are some errors with pytorch for this repo: here is how to fix them in order to create the env:
+    - create the env with ` virtualenv yolact `
+    - enter the env `source yolact/bin/activate`
+    - install pytorch `pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113`
+  or follow the instruction here `https://pytorch.org/`.
+    - install requirements `pip install -r requirements.txt`
 
 # Evaluation
 
