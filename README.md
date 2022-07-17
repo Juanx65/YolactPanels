@@ -30,7 +30,7 @@ A simple, fully convolutional model for real-time instance segmentation. This is
     - install pytorch `pip install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu113` or follow the instructions here `https://pytorch.org/`.
     - install the requirements `pip install -r requirements.txt`
     - Download Backbone: Resnet101 `resnet101_reducedfc.pth` from [here](https://drive.google.com/file/d/1tvqFPd4bJtakOlmn-uIA492g2qurRChj/view?usp=sharing).
-  - Small issues with pytorch need to be fixed, if using the cu113 versions, follow this:
+  - Small issues with pytorch needs to be fixed, if using the cu113 versions, follow this:
     - in `yolact/lib/python3.10/site-packages/torch/utils/utils/data/sampler.py`
       - in line 121 replace `generator = torch.Generator()` for `generator = torch.Generator(device='cuda')`
       - in line 128 to 133 replce 
