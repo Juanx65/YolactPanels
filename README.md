@@ -19,7 +19,7 @@ A simple, fully convolutional model for real-time instance segmentation. This is
    cd YolactPanels
    ```
  - To use this repo and the ready to use env, you need to be working with cuda 13 or higher and cudnn installed.
- - Activate the environment using one of the following methods:
+ - Activate the environment:
    - Activate Virtualenv Linux
       - source yolact/bin/activate
 
